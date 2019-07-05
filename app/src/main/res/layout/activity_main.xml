@@ -49,7 +49,7 @@
         android:orientation="vertical"
         tools:context=".MainActivity"
         android:columnCount="4"
-        android:rowCount="4">>
+        android:rowCount="4">
 
         <Button
 

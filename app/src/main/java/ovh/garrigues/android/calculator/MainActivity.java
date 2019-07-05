@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView operationView ;
     private TextView resultView ;
     private long actualNumber = 0;
+    private boolean calculed = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +43,45 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void compute(View view) {
+        long result ;
+        numberList.add(actualNumber);
 
+        if (numberList.size() >0)
+        {   result = numberList.get(0);
+
+            for(int index =0; index < operandList.size() ; index ++)
+            {
+                Operator op  = operandList.get(index);
+                long number_to_add ;
+                if (index == numberList.size()-1)
+                    number_to_add = 0;
+                else
+                {
+                    number_to_add = numberList.get(index+1);
+                }
+                if(op == Operator.DIVIDE && number_to_add == 0)
+                {
+                    resultView.setText("ERROR");
+                }
+                else
+                {
+                    switch (op)
+                    {
+                        case MULT:result *= number_to_add;break;
+                        case PLUS: result +=number_to_add;break;
+                        case MINUS:result -=number_to_add;break;
+                        case DIVIDE:result /=number_to_add;break;
+                    }
+
+                }
+            }
+        }
+        else
+        {
+            result = actualNumber;
+        }
+        resultView.setText(String.valueOf(result));
+        calculed = true;
     }
 
     public void addnumber(View view) {
@@ -66,6 +105,11 @@ public class MainActivity extends AppCompatActivity {
             operationView.setText(""+number+" "+op);
         else
             operationView.setText( str+" "+number+" "+op);
+        if (calculed)
+        {
+            operationView.setText("0");
+            calculed = false;
+        }
 
     }
     private enum Operator
